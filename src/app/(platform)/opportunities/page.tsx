@@ -2,6 +2,7 @@ import { SectionIntelligence } from "@/components/intelligence/SectionIntelligen
 import { AppHeader } from "@/components/layout/AppHeader";
 import { WorkflowProgress } from "@/components/layout/WorkflowProgress";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { SafeImage } from "@/components/ui/SafeImage";
 import { ScoreBadge } from "@/components/ui/ScoreBadge";
 
 import {
@@ -177,7 +178,7 @@ export default function OpportunityEnginePage() {
               <GlassCard key={item.id} className="overflow-hidden">
                 <div className="relative h-48 overflow-hidden bg-surface-container-high">
                   {"image" in item && item.image ? (
-                    <img
+                    <SafeImage
                       src={item.image}
                       alt={item.name}
                       className="h-full w-full object-cover"

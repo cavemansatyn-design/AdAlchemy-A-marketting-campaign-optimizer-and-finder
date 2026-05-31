@@ -12,7 +12,8 @@ interface SafeImageProps {
 }
 
 export function SafeImage({ src, alt, className }: SafeImageProps) {
-  const [current, setCurrent] = useState(src);
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const current = failedSrc === src ? FALLBACK : src;
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -22,7 +23,7 @@ export function SafeImage({ src, alt, className }: SafeImageProps) {
       className={className}
       loading="lazy"
       onError={() => {
-        if (current !== FALLBACK) setCurrent(FALLBACK);
+        if (current !== FALLBACK) setFailedSrc(src);
       }}
     />
   );

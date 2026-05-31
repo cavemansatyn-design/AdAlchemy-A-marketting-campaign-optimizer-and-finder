@@ -19,6 +19,7 @@ Open [http://localhost:3000](http://localhost:3000) for the landing page, or [ht
 | [docs/DEMO-PROMPTS.md](docs/DEMO-PROMPTS.md) | 15 copy-paste briefs for live API demos |
 | [docs/PRODUCT-AND-ARCHITECTURE.md](docs/PRODUCT-AND-ARCHITECTURE.md) | Idea, problem, solution, backend flow, tech stack |
 | [docs/REUSABLE-PROJECT-BLUEPRINT.md](docs/REUSABLE-PROJECT-BLUEPRINT.md) | Reusable architecture guide for future Anakin + ChatGPT projects |
+| [docs/VERCEL-DEPLOYMENT.md](docs/VERCEL-DEPLOYMENT.md) | GitHub and Vercel deployment checklist |
 
 ## Architecture
 

@@ -27,7 +27,7 @@ export function FilteredCreatorsGrid() {
           <SafeImage
             src={creator.image}
             alt={creator.name}
-            className="h-56 w-full bg-surface-container-low object-contain"
+            className="h-56 w-full bg-surface-container-low object-cover object-top"
           />
           <div className="p-5">
             <p className="font-data-mono text-[10px] uppercase text-primary">{creator.handle}</p>
@@ -78,7 +78,7 @@ export function FilteredCelebritiesGrid() {
             <SafeImage
               src={celeb.image}
               alt={celeb.name}
-              className="h-44 w-full bg-surface-container-low object-contain sm:h-full sm:min-h-[180px]"
+              className="h-44 w-full bg-surface-container-low object-cover object-top sm:h-full sm:min-h-[180px]"
             />
             <div className="p-5">
               <h4 className="font-headline-md text-xl">{celeb.name}</h4>

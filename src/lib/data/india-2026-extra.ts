@@ -34,7 +34,7 @@ export const EXTRA_CREATORS = [
     cost: "Premium creator",
     avgViews: "180K/reel",
     contentTypes: ["Fashion reels", "Brand integrations", "Festival specials"],
-    image: commonsImage("Blogger Masoom Minawala’s Festive Wedding.jpg"),
+    image: commonsImage("Blogger Masoom Minawala\u2019s Festive Wedding.jpg"),
     scores: [
       { type: "attention" as const, value: 86, label: "Attention" },
       { type: "momentum" as const, value: 142, label: "Momentum" },
@@ -392,7 +392,7 @@ export const EXTRA_EVENTS = [
     reach: "3.6M",
     cost: "Rs 9L-24L",
     category: "Esports",
-    image: commonsImage("Podczas Intel Extreme Masters (8465486152).jpg"),
+    image: commonsImage("Intel Extreme Masters Krak\u00f3w 2026.jpg"),
   },
 ];
 

@@ -181,7 +181,7 @@ export default function OpportunityEnginePage() {
                     <SafeImage
                       src={item.image}
                       alt={item.name}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover object-top"
                     />
                   ) : (
                     <span className="material-symbols-outlined absolute inset-0 m-auto flex h-fit w-fit text-6xl text-primary/30">

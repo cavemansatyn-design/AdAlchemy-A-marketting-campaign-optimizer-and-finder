@@ -175,7 +175,7 @@ const BASE_CREATORS = [
     followers: "3M+",
     engagement: "High",
     cost: "Premium creator",
-    image: commonsImage("Kusha Kapila spotted promoting Amazon miniTV’s Case Toh Banta Hai.jpg"),
+    image: commonsImage("Kusha Kapila spotted promoting Amazon miniTV\u2019s Case Toh Banta Hai.jpg"),
     scores: [
       { type: "attention" as const, value: 80, label: "Attention" },
       { type: "momentum" as const, value: 132, label: "Momentum" },
@@ -203,7 +203,7 @@ const BASE_CELEBRITIES = [
     brandFit: 97,
     risk: 8,
     cost: "Tier 1 sports",
-    image: commonsImage("Neeraj Chopra Budapest 2023.jpg"),
+    image: commonsImage("Neeraj Chopra.jpg"),
   },
   {
     name: "Deepika Padukone",
@@ -213,7 +213,7 @@ const BASE_CELEBRITIES = [
     brandFit: 86,
     risk: 18,
     cost: "Tier 1 film",
-    image: commonsImage("Deepika Padukone (2014).jpg"),
+    image: commonsImage("DeepikaPadukone2014.jpg"),
   },
   {
     name: "Ranveer Singh",
@@ -281,7 +281,7 @@ const BASE_EVENTS = [
     brandFit: 82,
     reach: "5M digital impressions",
     cost: "Rs 5L-18L",
-    image: commonsImage("NIT Jamshedpur.jpg"),
+    image: commonsImage("NIT Jamshedpur Gate.jpg"),
   },
 ];
 

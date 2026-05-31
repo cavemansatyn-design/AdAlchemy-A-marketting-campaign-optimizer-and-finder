@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 
-const FALLBACK =
-  "https://commons.wikimedia.org/wiki/Special:FilePath/Open10K.jpg?width=900";
+const FALLBACK = "/adalchemy-photo-fallback.svg";
 
 interface SafeImageProps {
   src: string;
@@ -22,6 +21,8 @@ export function SafeImage({ src, alt, className }: SafeImageProps) {
       alt={alt}
       className={className}
       loading="lazy"
+      decoding="async"
+      referrerPolicy="no-referrer"
       onError={() => {
         if (current !== FALLBACK) setFailedSrc(src);
       }}

@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Commercial AdAlchemy
+
+AI-powered Marketing Intelligence Platform for agencies.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) for the landing page, or [http://localhost:3000/dashboard](http://localhost:3000/dashboard) for the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Documentation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Doc | Description |
+|-----|-------------|
+| [docs/FRONTEND.md](docs/FRONTEND.md) | Frontend structure, navigation, API wiring |
+| [docs/DEMO-PROMPTS.md](docs/DEMO-PROMPTS.md) | 15 copy-paste briefs for live API demos |
+| [docs/PRODUCT-AND-ARCHITECTURE.md](docs/PRODUCT-AND-ARCHITECTURE.md) | Idea, problem, solution, backend flow, tech stack |
+| [docs/REUSABLE-PROJECT-BLUEPRINT.md](docs/REUSABLE-PROJECT-BLUEPRINT.md) | Reusable architecture guide for future Anakin + ChatGPT projects |
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
+- **Unified Intelligence Layer** (`src/lib/intelligence/`) — all data sources feed one API
+- **Workflow Context** — connected agency flow from Client Brief → Report
+- **Design System** — dark editorial glassmorphism from `stitch_commercial_adalchemy/adalchemy/DESIGN.md`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Copy `.env.example` to `.env.local`:
 
-## Deploy on Vercel
+```env
+ANAKIN_API_KEY=ak-your-key
+ANAKIN_WIRE_CHATGPT_ACTION_ID=your-chatgpt-prompt-action-id
+GROQ_API_KEY=                          # optional fallback
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### ChatGPT WIRE (Reasoning Model)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The platform uses **Anakin WIRE → ChatGPT Prompt** as its primary reasoning layer for:
+
+- Brand DNA analysis (Campaign Planner)
+- Budget scenario generation
+- Campaign concept generation
+- Intelligence query interpretation
+
+Wire returns structured output including `answer_text`, `citations`, `search_sources`, and `web_search_triggered` — used to compute confidence scores.
+
+## Core Flow
+
+Client Brief → Brand DNA → Audience → Trends → Creators → Celebrities → Events → Platforms → Opportunities → Budget → Campaign → Report

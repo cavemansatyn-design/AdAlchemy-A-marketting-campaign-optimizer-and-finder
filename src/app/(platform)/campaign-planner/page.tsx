@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { WorkflowProgress } from "@/components/layout/WorkflowProgress";
@@ -10,8 +10,63 @@ import { useWorkflow } from "@/context/WorkflowContext";
 import type { ClientBrief } from "@/lib/types/workflow";
 import type { BudgetScenario } from "@/lib/intelligence/schemas";
 import type { ReasoningMeta } from "@/lib/intelligence/model";
+import { getBriefFilteredCatalog } from "@/lib/data/brief-filter";
 
 import { SAMPLE_PROMPTS } from "@/lib/data/sample-prompts";
+
+type ScenarioPartner = {
+  name: string;
+  role: string;
+};
+
+type ScenarioDisplay = {
+  label: string;
+  partners: ScenarioPartner[];
+};
+
+function formatPartnerList(partners: Array<{ name: string }>) {
+  return partners.map((partner) => partner.name).join(", ");
+}
+
+function getScenarioDisplays(brief: ClientBrief | null): Record<string, ScenarioDisplay> {
+  const { creators, celebrities, events } = getBriefFilteredCatalog(brief);
+  const creatorPod = creators.slice(0, 3);
+  const eventCreatorPod = creators.slice(3, 5);
+  const topCelebrity = celebrities[0];
+  const topEvent = events[0];
+
+  return {
+    a: {
+      label: topCelebrity
+        ? `${topCelebrity.name} Celebrity Anchor`
+        : "Celebrity Anchor",
+      partners: topCelebrity
+        ? [{ name: topCelebrity.name, role: topCelebrity.cost }]
+        : [],
+    },
+    b: {
+      label: creatorPod.length
+        ? `${formatPartnerList(creatorPod)} Creator Pod`
+        : "Creator Pod",
+      partners: creatorPod.map((creator) => ({
+        name: creator.name,
+        role: creator.cost,
+      })),
+    },
+    c: {
+      label: topEvent
+        ? `${topEvent.name} + Creator Activation`
+        : "Event + Creator Activation",
+      partners: [
+        ...(topEvent ? [{ name: topEvent.name, role: topEvent.cost }] : []),
+        ...eventCreatorPod.map((creator) => ({
+          name: creator.name,
+          role: creator.cost,
+        })),
+      ],
+    },
+  };
+}
 
 export default function CampaignPlannerPage() {
   const router = useRouter();
@@ -39,6 +94,10 @@ export default function CampaignPlannerPage() {
   const [summary, setSummary] = useState<string | null>(null);
   const [reasoningMeta, setReasoningMeta] = useState<ReasoningMeta | null>(null);
   const [confidence, setConfidence] = useState<number | null>(null);
+  const scenarioDisplays = useMemo(
+    () => getScenarioDisplays(project.brief),
+    [project.brief]
+  );
 
   const handleAnalyze = async () => {
     setAnalyzing(true);
@@ -275,42 +334,59 @@ export default function CampaignPlannerPage() {
               allocation scenarios from the reasoning model.
             </p>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {(budgetScenarios.length > 0 ? budgetScenarios : project.budgetScenarios).map((scenario) => (
-                <GlassCard
-                  key={scenario.id}
-                  className={`p-6 ${scenario.recommended ? "gradient-stroke ring-1 ring-primary/20" : ""}`}
-                >
-                  {scenario.recommended && (
-                    <span className="font-data-mono text-[10px] uppercase text-primary">
-                      Recommended
-                    </span>
-                  )}
-                  <h4 className="mt-2 font-bold">{scenario.label}</h4>
-                  {scenario.rationale && (
-                    <p className="mt-2 text-sm text-on-surface-variant">
-                      {scenario.rationale}
-                    </p>
-                  )}
-                  <div className="mt-4 space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-on-surface-variant">Expected Reach</span>
-                      <span className="font-data-mono text-primary">
-                        {scenario.reach}
+              {(budgetScenarios.length > 0 ? budgetScenarios : project.budgetScenarios).map((scenario) => {
+                const display = scenarioDisplays[scenario.id.toLowerCase()];
+
+                return (
+                  <GlassCard
+                    key={scenario.id}
+                    className={`p-6 ${scenario.recommended ? "gradient-stroke ring-1 ring-primary/20" : ""}`}
+                  >
+                    {scenario.recommended && (
+                      <span className="font-data-mono text-[10px] uppercase text-primary">
+                        Recommended
                       </span>
+                    )}
+                    <h4 className="mt-2 font-bold">{display?.label ?? scenario.label}</h4>
+                    {display?.partners && display.partners.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {display.partners.map((partner) => (
+                          <span
+                            key={`${scenario.id}-${partner.name}`}
+                            className="rounded bg-surface-container-high px-2 py-1 text-[11px] font-bold text-on-surface-variant"
+                            title={partner.role}
+                          >
+                            {partner.name}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {scenario.rationale && (
+                      <p className="mt-2 text-sm text-on-surface-variant">
+                        {scenario.rationale}
+                      </p>
+                    )}
+                    <div className="mt-4 space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-on-surface-variant">Expected Reach</span>
+                        <span className="font-data-mono text-primary">
+                          {scenario.reach}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-on-surface-variant">Engagement</span>
+                        <span className="font-data-mono">{scenario.engagement}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-on-surface-variant">Cost Efficiency</span>
+                        <span className="font-data-mono text-success-emerald">
+                          {scenario.efficiency}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-on-surface-variant">Engagement</span>
-                      <span className="font-data-mono">{scenario.engagement}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-on-surface-variant">Cost Efficiency</span>
-                      <span className="font-data-mono text-success-emerald">
-                        {scenario.efficiency}
-                      </span>
-                    </div>
-                  </div>
-                </GlassCard>
-              ))}
+                  </GlassCard>
+                );
+              })}
             </div>
           </section>
         )}

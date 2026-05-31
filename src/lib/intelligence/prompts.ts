@@ -65,7 +65,7 @@ Use this exact object shape and replace every example value with specific campai
   "summary": "One concise strategic summary"
 }
 
-Return no text before or after the JSON. Provide 3 distinct budget scenarios with ids "a", "b", and "c". Mark exactly one as recommended. Optimize for India 2026 cultural momentum, ROI, brand fit, execution feasibility, and confidence.`;
+Return no text before or after the JSON. Provide 3 distinct budget scenarios with ids "a", "b", and "c". Mark exactly one as recommended. Use specific real creator, celebrity, and event names in labels/rationales where relevant; never leave labels as generic placeholders like "One Celebrity" or "Three Creators". Optimize for India 2026 cultural momentum, ROI, brand fit, execution feasibility, and confidence.`;
 }
 
 export function buildCampaignPrompt(input: {
@@ -171,5 +171,5 @@ Return this exact shape:
   }
 }
 
-3 budget scenarios, exactly one recommended. India 2026 focus. Never mention backend tools.`;
+3 budget scenarios, exactly one recommended. Use specific real creator, celebrity, and event names in budget labels, rationales, and section bodies; never use generic placeholders like "One Celebrity", "Three Creators", or "Event + Creators" as final visible recommendations. India 2026 focus. Never mention backend tools.`;
 }

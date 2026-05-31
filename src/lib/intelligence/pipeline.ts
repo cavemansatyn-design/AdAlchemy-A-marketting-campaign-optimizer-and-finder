@@ -16,21 +16,23 @@ import {
 import type { ReasoningMeta } from "@/lib/intelligence/model";
 import {
   INDIA_2026_AUDIENCE,
-  INDIA_2026_CREATORS,
-  INDIA_2026_CELEBRITIES,
-  INDIA_2026_EVENTS,
   INDIA_2026_TRENDS,
 } from "@/lib/data/india-2026";
+import { getBriefFilteredCatalog } from "@/lib/data/brief-filter";
 
 function fallbackIntelligence(
   brief: ClientBrief,
   brandDNA: BrandDNA,
   sources: Awaited<ReturnType<typeof discoverMarketSources>>
 ): CampaignIntelligence {
-  const topTrend = INDIA_2026_TRENDS[0];
-  const topCreator = INDIA_2026_CREATORS[0];
-  const topEvent = INDIA_2026_EVENTS[0];
-  const topCeleb = INDIA_2026_CELEBRITIES[0];
+  const catalog = getBriefFilteredCatalog(brief);
+  const topTrend = catalog.trends[0] ?? INDIA_2026_TRENDS[0];
+  const topCreator = catalog.creators[0];
+  const topEvent = catalog.events[0];
+  const topCeleb = catalog.celebrities[0];
+  const recommendedCreators = catalog.creators.slice(0, 3);
+  const recommendedCelebrities = catalog.celebrities.slice(0, 3);
+  const recommendedEvents = catalog.events.slice(0, 5);
 
   return {
     executiveSummary: `${brief.brand} can win in ${brief.region} by pairing ${brandDNA.coreThemes.slice(0, 2).join(" and ")} with India 2026 cultural momentum around ${topTrend.name.toLowerCase()}, ${topCreator.niche.toLowerCase()}, and ${topEvent.name}. With a ${brief.budget} budget, creator pods and event sampling will outperform celebrity-only launches for ${brief.audience}.`,
@@ -45,15 +47,15 @@ function fallbackIntelligence(
       },
       creators: {
         title: "Creator Intelligence",
-        body: `Recommended pods: ${INDIA_2026_CREATORS.slice(0, 3).map((c) => `${c.name} (${c.niche}, ${c.cost})`).join("; ")}. ${topCreator.name} offers the strongest regional-language trust for ${brief.audience}.`,
+        body: `Recommended pods: ${recommendedCreators.map((c) => `${c.name} (${c.niche}, ${c.cost})`).join("; ")}. ${topCreator.name} is the strongest creator match for ${brief.audience} in ${brief.region}.`,
       },
       celebrities: {
         title: "Celebrity Intelligence",
-        body: `For ${brief.budget}, consider ${topCeleb.name} (${topCeleb.cost}) for credibility or Smriti Mandhana for women's sports crossover. Deepika and Ranveer suit mass awareness but need creator proof layers.`,
+        body: `For ${brief.budget}, consider ${recommendedCelebrities.map((c) => `${c.name} (${c.cost})`).join("; ")}. ${topCeleb.name} gives the cleanest celebrity anchor, while the creator layer keeps the plan from becoming celebrity-only.`,
       },
       events: {
         title: "Event Intelligence",
-        body: `Upcoming routes: ${INDIA_2026_EVENTS.map((e) => `${e.name} — ${e.cost}`).join("; ")}. ${topEvent.name} offers the strongest sampling and community proof for fitness launches.`,
+        body: `Upcoming routes: ${recommendedEvents.map((e) => `${e.name} (${e.cost})`).join("; ")}. ${topEvent.name} offers the strongest sponsorship route for ${brief.goals.toLowerCase()}.`,
       },
       opportunities: {
         title: "Opportunity Engine",

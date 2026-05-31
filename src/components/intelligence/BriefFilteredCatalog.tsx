@@ -24,7 +24,11 @@ export function FilteredCreatorsGrid() {
               Top match for {project.brief.brand}
             </div>
           )}
-          <SafeImage src={creator.image} alt={creator.name} className="h-44 w-full object-cover" />
+          <SafeImage
+            src={creator.image}
+            alt={creator.name}
+            className="h-56 w-full bg-surface-container-low object-contain"
+          />
           <div className="p-5">
             <p className="font-data-mono text-[10px] uppercase text-primary">{creator.handle}</p>
             <h4 className="mt-2 font-headline-md text-lg">{creator.name}</h4>
@@ -71,7 +75,11 @@ export function FilteredCelebritiesGrid() {
             </div>
           )}
           <div className="grid grid-cols-1 sm:grid-cols-[140px_1fr]">
-            <SafeImage src={celeb.image} alt={celeb.name} className="h-44 w-full object-cover sm:h-full sm:min-h-[180px]" />
+            <SafeImage
+              src={celeb.image}
+              alt={celeb.name}
+              className="h-44 w-full bg-surface-container-low object-contain sm:h-full sm:min-h-[180px]"
+            />
             <div className="p-5">
               <h4 className="font-headline-md text-xl">{celeb.name}</h4>
               <p className="mt-2 text-sm text-on-surface-variant">{celeb.narrative}</p>

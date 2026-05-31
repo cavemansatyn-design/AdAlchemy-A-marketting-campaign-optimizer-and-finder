@@ -111,7 +111,7 @@ const MOCK_BRAND_DNA: BrandDNA = {
 const MOCK_BUDGET: BudgetScenario[] = [
   {
     id: "a",
-    label: "Option A: One Celebrity",
+    label: "Virat Kohli Celebrity Anchor",
     reach: "8.2M",
     engagement: "4.1%",
     efficiency: "Medium",
@@ -119,7 +119,7 @@ const MOCK_BUDGET: BudgetScenario[] = [
   },
   {
     id: "b",
-    label: "Option B: Three Mid-tier Creators",
+    label: "Bhuvan Bam, Prajakta Koli, CarryMinati Creator Pod",
     reach: "4.5M",
     engagement: "7.8%",
     efficiency: "High",
@@ -127,7 +127,7 @@ const MOCK_BUDGET: BudgetScenario[] = [
   },
   {
     id: "c",
-    label: "Option C: Event + Creators",
+    label: "TCS World 10K Bengaluru + Creator Activation",
     reach: "6.1M",
     engagement: "6.2%",
     efficiency: "High",
